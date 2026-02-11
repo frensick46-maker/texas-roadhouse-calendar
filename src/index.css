@@ -218,32 +218,33 @@ button {
   color: #b91c1c;
 }
 
+/* Mobile-first: shell and topbar in normal flow by default */
 .app-shell {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  padding-top: max(1rem, env(safe-area-inset-top));
+  padding: 0.75rem 1rem;
+  padding-top: max(0.75rem, env(safe-area-inset-top));
 }
 
 .app-topbar {
-  position: fixed;
-  top: max(0.9rem, env(safe-area-inset-top));
-  right: max(1rem, env(safe-area-inset-right));
-  left: auto;
+  position: static;
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  z-index: 20;
+  justify-content: flex-end;
+  gap: 0.5rem;
   min-height: 44px;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
 }
 
+/* Sidebar legend: hidden by default (mobile), shown on desktop */
 .app-legend {
+  display: none;
   position: fixed;
   top: 50%;
   left: 1.4rem;
   transform: translateY(-50%);
-  display: flex;
   flex-direction: column;
   gap: 0.35rem;
   padding: 0.6rem 0.75rem;
@@ -302,20 +303,35 @@ button {
   background: radial-gradient(circle at 30% 10%, #fef9c3, #eab308);
 }
 
-@media (min-width: 901px) {
-  .app-header,
-  .app-main {
-    margin-left: 140px;
+/* Desktop: fixed topbar and sidebar legend */
+@media (min-width: 769px) {
+  .app-shell {
+    padding: 1rem;
+    padding-top: max(3rem, calc(env(safe-area-inset-top) + 2.5rem));
+  }
+
+  .app-topbar {
+    position: fixed;
+    top: max(0.9rem, env(safe-area-inset-top));
+    right: max(1rem, env(safe-area-inset-right));
+    left: auto;
+    margin-bottom: 0;
+    z-index: 20;
   }
 }
 
-@media (max-width: 900px) {
+@media (min-width: 901px) {
   .app-legend {
-    display: none;
+    display: flex;
   }
 
   .app-legend-mobile {
-    display: block;
+    display: none;
+  }
+
+  .app-header,
+  .app-main {
+    margin-left: 140px;
   }
 }
 
@@ -380,17 +396,19 @@ button {
   padding: 0.5rem 1rem;
 }
 
+/* Mobile: show legend strip (desktop uses sidebar) */
 .app-legend-mobile {
-  display: none;
+  display: block;
   margin: 0.5rem 0 0;
-  padding: 0.5rem 0.75rem;
+  padding: 0.55rem 0.75rem;
   border-radius: 0.75rem;
-  background-color: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(51, 65, 85, 0.7);
-  font-size: 0.72rem;
-  color: #cbd5e1;
+  background-color: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  font-size: 0.8rem;
+  color: #e5f9ff;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  flex-shrink: 0;
 }
 
 .app-legend-mobile-inner {
@@ -509,6 +527,47 @@ button {
 
 .calendar {
   margin-top: 0.5rem;
+}
+
+/* Color key: always visible at top of calendar (mobile-first) */
+.calendar-color-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.75rem;
+  background-color: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.calendar-color-key-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #e5f9ff;
+  margin-right: 0.25rem;
+}
+
+.calendar-color-key-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+}
+
+.calendar-color-key-items .legend-swatch {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+.calendar-color-key-items span:not(.legend-swatch) {
+  font-size: 0.8rem;
+  color: #cbd5e1;
 }
 
 .calendar-header {
@@ -1050,11 +1109,6 @@ button {
     padding-inline: 1.5rem;
   }
 
-  .app-shell {
-    padding: 0.75rem;
-    padding-top: max(3.25rem, calc(env(safe-area-inset-top) + 2.5rem));
-  }
-
   .app-header {
     flex-direction: column;
     align-items: center;
@@ -1080,14 +1134,7 @@ button {
   }
 
   .app-topbar {
-    position: static;
-    top: auto;
-    right: auto;
-    left: auto;
     flex-wrap: wrap;
-    gap: 0.35rem;
-    justify-content: flex-end;
-    margin-bottom: 0.5rem;
     align-self: flex-end;
   }
 
@@ -1098,7 +1145,21 @@ button {
 
   .app-legend-mobile {
     margin: 0.4rem 0 0;
-    padding: 0.4rem 0.6rem;
+    padding: 0.5rem 0.65rem;
+    font-size: 0.8rem;
+  }
+
+  .calendar-color-key {
+    padding: 0.65rem 0.85rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .calendar-color-key-label {
+    font-size: 0.85rem;
+  }
+
+  .calendar-color-key-items span:not(.legend-swatch) {
+    font-size: 0.85rem;
   }
 
   .dashboard {
