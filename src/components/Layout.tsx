@@ -84,6 +84,9 @@ export function Layout({ children }: LayoutProps) {
         </div>
       </div>
       <main className="app-main">{children}</main>
+      <footer className="app-footer">
+        <span className="app-footer-build">Updated Feb 10, 2025</span>
+      </footer>
     </div>
   )
 }

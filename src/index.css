@@ -446,6 +446,17 @@ button {
     0 0 0 1px rgba(15, 118, 110, 0.45);
 }
 
+.app-footer {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+.app-footer-build {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
 .dashboard {
   display: flex;
   flex-direction: column;
