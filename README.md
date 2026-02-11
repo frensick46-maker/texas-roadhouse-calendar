@@ -77,8 +77,12 @@ To give your team a link they can open from home (or anywhere), deploy the app t
      - `VITE_SUPABASE_URL` = your Supabase project URL
      - `VITE_SUPABASE_ANON_KEY` = your Supabase anon key
    - Save.
-5. **Deploy:** Click **Deploy**. Vercel will build and publish the app.
-6. **Share the link:** After deploy, Vercel shows a URL like `https://your-app.vercel.app`. Share that with your team. Everyone can open it from any network and sign in with the same account. (Right now events are stored in the browser session; we can add saving events to Supabase next so everyone sees the same calendar.)
+5. **Create the shared events table in Supabase** (one-time):
+   - In the Supabase dashboard, open **SQL Editor** → **New query**.
+   - Copy the contents of `supabase/events-table.sql` from this repo and paste into the editor, then **Run**.
+   - This creates the `events` table and RLS so every signed-in user sees and can add/remove the same calendar events.
+6. **Deploy:** Click **Deploy**. Vercel will build and publish the app.
+7. **Share the link:** After deploy, Vercel shows a URL like `https://your-app.vercel.app`. Share that with your team. Everyone can open it from any network, sign in, and see the same shared calendar (events are stored in Supabase).
 
 ### Updating the live app
 
@@ -104,5 +108,5 @@ Everyone can use the same login; the calendar and events are shared. The app lay
 - You can:
   - **Create account**: enter an email and password (at least 6 characters) to sign up.
   - **Sign in**: use the same credentials to log back in.
-- After signing in, you will land on the **dashboard** with tabs for **Calendar** and **Team todos**. Use the calendar to view holidays and add color-coded events; switch to Team todos for shared lists (coming soon).
+- After signing in, you will land on the **dashboard** with tabs for **Calendar** and **Team todos**. The calendar loads events from Supabase—everyone on the team sees the same events. Add or remove events; they are saved for the whole team. Use Team todos for shared lists (coming soon).
 

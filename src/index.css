@@ -475,6 +475,12 @@ button {
   color: #6b7280;
 }
 
+.calendar-loading {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
 .calendar-nav-button {
   border-radius: 999px;
   border: 1px solid rgba(15, 118, 110, 0.7);

@@ -1,4 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useAuth } from '../auth/AuthContext'
+import { supabase } from '../lib/supabaseClient'
 
 type Holiday = {
   date: string // YYYY-MM-DD
@@ -101,6 +103,7 @@ const EVENT_TYPE_LABELS: Record<EventType, string> = {
 }
 
 export function Calendar2026() {
+  const { session } = useAuth()
   const year = 2026
   const today = new Date()
   const isToday2026 = today.getFullYear() === year
@@ -109,10 +112,40 @@ export function Calendar2026() {
 
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [events, setEvents] = useState<CalendarEvent[]>([])
+  const [eventsLoading, setEventsLoading] = useState(true)
   const [newTitle, setNewTitle] = useState('')
   const [newDescription, setNewDescription] = useState('')
   const [newType, setNewType] = useState<EventType>('lsm')
   const [eventIdPendingDelete, setEventIdPendingDelete] = useState<string | null>(null)
+
+  useEffect(() => {
+    const load = async () => {
+      setEventsLoading(true)
+      const { data, error } = await supabase
+        .from('events')
+        .select('id, date, title, description, type')
+        .gte('date', '2026-01-01')
+        .lte('date', '2026-12-31')
+        .order('date', { ascending: true })
+      if (error) {
+        // Table might not exist yet
+        console.error('Failed to load events:', error.message)
+        setEvents([])
+      } else {
+        setEvents(
+          (data ?? []).map((row) => ({
+            id: row.id,
+            date: row.date,
+            title: row.title,
+            description: row.description ?? undefined,
+            type: row.type as EventType,
+          })),
+        )
+      }
+      setEventsLoading(false)
+    }
+    void load()
+  }, [])
 
   const selectedHolidays = useMemo(
     () => (selectedDate ? holidaysByDate[selectedDate] ?? [] : []),
@@ -173,16 +206,31 @@ export function Calendar2026() {
     return items
   }, [events])
 
-  const handleAddEvent = () => {
+  const handleAddEvent = async () => {
     if (!selectedDate || !newTitle.trim()) return
+    const { data, error } = await supabase
+      .from('events')
+      .insert({
+        date: selectedDate,
+        title: newTitle.trim(),
+        description: newDescription.trim() || null,
+        type: newType,
+        created_by: session?.user?.id ?? null,
+      })
+      .select('id, date, title, description, type')
+      .single()
+    if (error) {
+      console.error('Failed to add event:', error.message)
+      return
+    }
     setEvents((prev) => [
       ...prev,
       {
-        id: `${selectedDate}-${Date.now()}-${prev.length}`,
-        date: selectedDate,
-        title: newTitle.trim(),
-        description: newDescription.trim() || undefined,
-        type: newType,
+        id: data.id,
+        date: data.date,
+        title: data.title,
+        description: data.description ?? undefined,
+        type: data.type as EventType,
       },
     ])
     setNewTitle('')
@@ -190,8 +238,13 @@ export function Calendar2026() {
     setNewType('lsm')
   }
 
-  const handleConfirmRemoveEvent = () => {
+  const handleConfirmRemoveEvent = async () => {
     if (!eventIdPendingDelete) return
+    const { error } = await supabase.from('events').delete().eq('id', eventIdPendingDelete)
+    if (error) {
+      console.error('Failed to remove event:', error.message)
+      return
+    }
     setEvents((prev) => prev.filter((ev) => ev.id !== eventIdPendingDelete))
     setEventIdPendingDelete(null)
   }
@@ -214,6 +267,11 @@ export function Calendar2026() {
           <div className="calendar-subtitle">
             U.S. federal holidays are highlighted in the calendar and listed below.
           </div>
+          {eventsLoading && (
+            <div className="calendar-loading" aria-live="polite">
+              Loading shared events…
+            </div>
+          )}
         </div>
         <div className="calendar-month-controls">
           <button
