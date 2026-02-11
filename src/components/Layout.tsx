@@ -32,32 +32,6 @@ export function Layout({ children }: LayoutProps) {
           Sign out
         </button>
       </div>
-      <div className="app-legend" aria-hidden="true">
-        <div className="app-legend-item">
-          <span className="legend-swatch legend-swatch--lsm" />
-          <span>LSM event</span>
-        </div>
-        <div className="app-legend-item">
-          <span className="legend-swatch legend-swatch--boh" />
-          <span>BOH</span>
-        </div>
-        <div className="app-legend-item">
-          <span className="legend-swatch legend-swatch--foh" />
-          <span>FOH</span>
-        </div>
-        <div className="app-legend-item">
-          <span className="legend-swatch legend-swatch--visitor" />
-          <span>Visitor</span>
-        </div>
-        <div className="app-legend-item">
-          <span className="legend-swatch legend-swatch--holiday" />
-          <span>Holiday</span>
-        </div>
-        <div className="app-legend-item">
-          <span className="legend-swatch legend-swatch--birthday" />
-          <span>Birthday / Anniversary</span>
-        </div>
-      </div>
       <header className="app-header">
         <div className="app-header-main">
           <div className="app-header-brand">
