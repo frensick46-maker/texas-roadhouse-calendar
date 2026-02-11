@@ -293,9 +293,6 @@ export function Calendar2026() {
       <div className="calendar-header">
         <div>
           <div className="calendar-title">Year overview – 2026</div>
-          <div className="calendar-subtitle">
-            U.S. federal holidays are highlighted in the calendar and listed below.
-          </div>
           {eventsLoading && (
             <div className="calendar-loading" aria-live="polite">
               Loading shared events…
@@ -404,19 +401,19 @@ export function Calendar2026() {
       </div>
 
       <div className="calendar-holiday-list">
-        <div className="calendar-holiday-list-title">
-          {selectedDate
-            ? (() => {
-                const [y, m, d] = selectedDate.split('-').map(Number)
-                const displayDate = new Date(y, m - 1, d)
-                return `Details for ${displayDate.toLocaleDateString(undefined, {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                })}`
-              })()
-            : 'Click a day to see holidays and events'}
-        </div>
+        {selectedDate ? (
+          <div className="calendar-holiday-list-title">
+            {(() => {
+              const [y, m, d] = selectedDate.split('-').map(Number)
+              const displayDate = new Date(y, m - 1, d)
+              return displayDate.toLocaleDateString(undefined, {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })
+            })()}
+          </div>
+        ) : null}
         {selectedDate ? (
           <>
             <ul>

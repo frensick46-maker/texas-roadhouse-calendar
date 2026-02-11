@@ -34,9 +34,6 @@ export function DashboardPage() {
       {activeTab === 'calendar' ? (
         <section className="panel">
           <h2 className="panel-title">Team calendar</h2>
-          <p className="panel-description">
-            A 2026 calendar with major holidays and store events.
-          </p>
           <Calendar2026 />
         </section>
       ) : (
