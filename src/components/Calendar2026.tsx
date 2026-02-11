@@ -264,12 +264,30 @@ export function Calendar2026() {
       <div className="calendar-color-key" role="region" aria-label="Event color key">
         <span className="calendar-color-key-label">Color key</span>
         <div className="calendar-color-key-items">
-          <span className="legend-swatch legend-swatch--lsm" /><span>LSM</span>
-          <span className="legend-swatch legend-swatch--boh" /><span>BOH</span>
-          <span className="legend-swatch legend-swatch--foh" /><span>FOH</span>
-          <span className="legend-swatch legend-swatch--visitor" /><span>Visitor</span>
-          <span className="legend-swatch legend-swatch--holiday" /><span>Holiday</span>
-          <span className="legend-swatch legend-swatch--birthday" /><span>Bday</span>
+          <div className="calendar-color-key-item">
+            <span className="legend-swatch legend-swatch--lsm" />
+            <span>LSM</span>
+          </div>
+          <div className="calendar-color-key-item">
+            <span className="legend-swatch legend-swatch--boh" />
+            <span>BOH</span>
+          </div>
+          <div className="calendar-color-key-item">
+            <span className="legend-swatch legend-swatch--foh" />
+            <span>FOH</span>
+          </div>
+          <div className="calendar-color-key-item">
+            <span className="legend-swatch legend-swatch--visitor" />
+            <span>Visitor</span>
+          </div>
+          <div className="calendar-color-key-item">
+            <span className="legend-swatch legend-swatch--holiday" />
+            <span>Holiday</span>
+          </div>
+          <div className="calendar-color-key-item">
+            <span className="legend-swatch legend-swatch--birthday" />
+            <span>Bday</span>
+          </div>
         </div>
       </div>
       <div className="calendar-header">

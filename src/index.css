@@ -521,6 +521,12 @@ button {
   gap: 0.4rem 0.6rem;
 }
 
+.calendar-color-key-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
 .calendar-color-key-items .legend-swatch {
   width: 10px;
   height: 10px;
