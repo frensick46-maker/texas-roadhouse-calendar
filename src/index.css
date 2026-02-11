@@ -930,6 +930,10 @@ button {
   gap: 0.4rem;
 }
 
+.calendar-event-add-toggle {
+  margin-top: 0.5rem;
+}
+
 .calendar-event-form-row {
   display: flex;
   flex-direction: row;

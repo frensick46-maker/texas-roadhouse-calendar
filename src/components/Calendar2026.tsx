@@ -117,6 +117,7 @@ export function Calendar2026() {
   const [newDescription, setNewDescription] = useState('')
   const [newType, setNewType] = useState<EventType>('lsm')
   const [eventIdPendingDelete, setEventIdPendingDelete] = useState<string | null>(null)
+  const [showAddForm, setShowAddForm] = useState(false)
 
   useEffect(() => {
     const load = async () => {
@@ -368,6 +369,7 @@ export function Calendar2026() {
                   }
                   onClick={() => {
                     if (!dateString || day == null) return
+                    setShowAddForm(false)
                     setSelectedDate((prev) => (prev === dateString ? null : dateString))
                   }}
                 >
@@ -472,44 +474,59 @@ export function Calendar2026() {
               ) : (
                 <p className="calendar-events-empty">No events yet for this day.</p>
               )}
-              <div className="calendar-event-form">
-                <div className="calendar-event-form-row">
-                  <input
-                    className="calendar-event-input"
-                    type="text"
-                    placeholder="Event title (e.g. LSM promo, FOH meeting)"
-                    value={newTitle}
-                    onChange={(event) => setNewTitle(event.target.value)}
-                  />
-                  <select
-                    className="calendar-event-select"
-                    value={newType}
-                    onChange={(event) => setNewType(event.target.value as EventType)}
-                  >
-                    <option value="lsm">LSM event</option>
-                    <option value="boh">BOH</option>
-                    <option value="foh">FOH</option>
-                    <option value="visitor">Visitor</option>
-                    <option value="holiday">Holiday</option>
-                    <option value="birthday">Birthday / Anniversary</option>
-                  </select>
-                </div>
-                <textarea
-                  className="calendar-event-textarea"
-                  placeholder="Optional description (who, what, timing, notes)"
-                  value={newDescription}
-                  onChange={(event) => setNewDescription(event.target.value)}
-                  rows={2}
-                />
-                <button
-                  type="button"
-                  className="primary-button calendar-event-submit"
-                  onClick={handleAddEvent}
-                  disabled={!newTitle.trim() || !selectedDate}
-                >
-                  Add event
-                </button>
-              </div>
+              {selectedDate ? (
+                <>
+                  {!showAddForm && (
+                    <button
+                      type="button"
+                      className="secondary-button calendar-event-add-toggle"
+                      onClick={() => setShowAddForm(true)}
+                    >
+                      Add event
+                    </button>
+                  )}
+                  {showAddForm && (
+                    <div className="calendar-event-form">
+                      <div className="calendar-event-form-row">
+                        <input
+                          className="calendar-event-input"
+                          type="text"
+                          placeholder="Event title (e.g. LSM promo, FOH meeting)"
+                          value={newTitle}
+                          onChange={(event) => setNewTitle(event.target.value)}
+                        />
+                        <select
+                          className="calendar-event-select"
+                          value={newType}
+                          onChange={(event) => setNewType(event.target.value as EventType)}
+                        >
+                          <option value="lsm">LSM event</option>
+                          <option value="boh">BOH</option>
+                          <option value="foh">FOH</option>
+                          <option value="visitor">Visitor</option>
+                          <option value="holiday">Holiday</option>
+                          <option value="birthday">Birthday / Anniversary</option>
+                        </select>
+                      </div>
+                      <textarea
+                        className="calendar-event-textarea"
+                        placeholder="Optional description (who, what, timing, notes)"
+                        value={newDescription}
+                        onChange={(event) => setNewDescription(event.target.value)}
+                        rows={2}
+                      />
+                      <button
+                        type="button"
+                        className="primary-button calendar-event-submit"
+                        onClick={handleAddEvent}
+                        disabled={!newTitle.trim() || !selectedDate}
+                      >
+                        Save event
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : null}
             </div>
           </>
         ) : null}
