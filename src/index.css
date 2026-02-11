@@ -409,6 +409,14 @@ button {
   margin-right: 0.15rem;
 }
 
+.app-legend-mobile-label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 0.5rem;
+  color: #e5f9ff;
+}
+
 .app-main {
   flex: 1;
   margin-top: 1.25rem;
@@ -1072,11 +1080,15 @@ button {
   }
 
   .app-topbar {
-    top: max(0.5rem, env(safe-area-inset-top));
-    right: max(0.5rem, env(safe-area-inset-right));
+    position: static;
+    top: auto;
+    right: auto;
+    left: auto;
     flex-wrap: wrap;
     gap: 0.35rem;
     justify-content: flex-end;
+    margin-bottom: 0.5rem;
+    align-self: flex-end;
   }
 
   .user-email {
