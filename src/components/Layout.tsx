@@ -66,23 +66,6 @@ export function Layout({ children }: LayoutProps) {
           </div>
         </div>
       </header>
-      <div className="app-legend-mobile" aria-label="Event type legend">
-        <div className="app-legend-mobile-inner">
-          <span className="app-legend-mobile-label">Legend:</span>
-          <span className="legend-swatch legend-swatch--lsm" />
-          <span>LSM</span>
-          <span className="legend-swatch legend-swatch--boh" />
-          <span>BOH</span>
-          <span className="legend-swatch legend-swatch--foh" />
-          <span>FOH</span>
-          <span className="legend-swatch legend-swatch--visitor" />
-          <span>Visitor</span>
-          <span className="legend-swatch legend-swatch--holiday" />
-          <span>Holiday</span>
-          <span className="legend-swatch legend-swatch--birthday" />
-          <span>Bday</span>
-        </div>
-      </div>
       <main className="app-main">{children}</main>
       <footer className="app-footer">
         <span className="app-footer-build">Updated Feb 10, 2025</span>
